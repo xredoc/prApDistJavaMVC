@@ -1,0 +1,6 @@
+com\mycompany\backend\modelo\Usuario.class
+com\mycompany\backend\persistencia\HibernateUtil.class
+com\mycompany\backend\negocio\UsuarioNegocio.class
+com\mycompany\backend\BackEnd.class
+com\mycompany\backend\persistencia\UsuarioDAO.class
+com\mycompany\backend\controlador\UsuarioControlador.class
