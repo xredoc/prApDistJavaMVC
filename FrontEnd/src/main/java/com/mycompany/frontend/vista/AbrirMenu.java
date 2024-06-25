@@ -27,10 +27,27 @@ public class AbrirMenu extends javax.swing.JFrame {
     private void initComponents() {
 
         jMenuItem1 = new javax.swing.JMenuItem();
+        jMenuItem2 = new javax.swing.JMenuItem();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenuUsuarios = new javax.swing.JMenu();
         jMenuItemAdministrarUsuarios = new javax.swing.JMenuItem();
         jMenuActivos = new javax.swing.JMenu();
+        jMenuItemTipodeActivo = new javax.swing.JMenuItem();
+        jMenuItemActivo = new javax.swing.JMenuItem();
+        jMenuItemDepreciaciones = new javax.swing.JMenuItem();
+        jMenuItemReporte1A = new javax.swing.JMenuItem();
+        jMenu1 = new javax.swing.JMenu();
+        jMenuItemActivoM = new javax.swing.JMenuItem();
+        jMenuItemActividad = new javax.swing.JMenuItem();
+        jMenuItemMantenimiento = new javax.swing.JMenuItem();
+        jMenuItemReporte1M = new javax.swing.JMenuItem();
+        jMenuItemReporte2M = new javax.swing.JMenuItem();
+        jMenu2 = new javax.swing.JMenu();
+        jMenuItemAutor = new javax.swing.JMenuItem();
+        jMenuItemLibro = new javax.swing.JMenuItem();
+        jMenuItemPrestamo = new javax.swing.JMenuItem();
+        jMenuItemReporte1B = new javax.swing.JMenuItem();
+        jMenuItemReporte2B = new javax.swing.JMenuItem();
         jMenuContabilidad = new javax.swing.JMenu();
         jMenuItemTipodeCuenta = new javax.swing.JMenuItem();
         jMenuItemCuentas = new javax.swing.JMenuItem();
@@ -39,6 +56,8 @@ public class AbrirMenu extends javax.swing.JFrame {
         jMenuItemEstadodeResultados = new javax.swing.JMenuItem();
 
         jMenuItem1.setText("jMenuItem1");
+
+        jMenuItem2.setText("jMenuItem2");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Menú Principal");
@@ -61,7 +80,58 @@ public class AbrirMenu extends javax.swing.JFrame {
         jMenuBar1.add(jMenuUsuarios);
 
         jMenuActivos.setText("Activos");
+
+        jMenuItemTipodeActivo.setText("Tipo de activo");
+        jMenuActivos.add(jMenuItemTipodeActivo);
+
+        jMenuItemActivo.setText("Activo");
+        jMenuActivos.add(jMenuItemActivo);
+
+        jMenuItemDepreciaciones.setText("Depreciaciones");
+        jMenuActivos.add(jMenuItemDepreciaciones);
+
+        jMenuItemReporte1A.setText("Reporte");
+        jMenuActivos.add(jMenuItemReporte1A);
+
         jMenuBar1.add(jMenuActivos);
+
+        jMenu1.setText("Mantenimiento");
+
+        jMenuItemActivoM.setText("Activo");
+        jMenu1.add(jMenuItemActivoM);
+
+        jMenuItemActividad.setText("Actividad");
+        jMenu1.add(jMenuItemActividad);
+
+        jMenuItemMantenimiento.setText("Mantenimiento");
+        jMenu1.add(jMenuItemMantenimiento);
+
+        jMenuItemReporte1M.setText("Reporte 1");
+        jMenu1.add(jMenuItemReporte1M);
+
+        jMenuItemReporte2M.setText("Reporte 2");
+        jMenu1.add(jMenuItemReporte2M);
+
+        jMenuBar1.add(jMenu1);
+
+        jMenu2.setText("Biblioteca");
+
+        jMenuItemAutor.setText("Autor");
+        jMenu2.add(jMenuItemAutor);
+
+        jMenuItemLibro.setText("Libro");
+        jMenu2.add(jMenuItemLibro);
+
+        jMenuItemPrestamo.setText("Préstamo");
+        jMenu2.add(jMenuItemPrestamo);
+
+        jMenuItemReporte1B.setText("Reporte 1");
+        jMenu2.add(jMenuItemReporte1B);
+
+        jMenuItemReporte2B.setText("Reporte 2");
+        jMenu2.add(jMenuItemReporte2B);
+
+        jMenuBar1.add(jMenu2);
 
         jMenuContabilidad.setText("Contabilidad");
         jMenuContabilidad.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -178,15 +248,32 @@ public class AbrirMenu extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JMenu jMenu1;
+    private javax.swing.JMenu jMenu2;
     private javax.swing.JMenu jMenuActivos;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenu jMenuContabilidad;
     private javax.swing.JMenuItem jMenuItem1;
+    private javax.swing.JMenuItem jMenuItem2;
+    private javax.swing.JMenuItem jMenuItemActividad;
+    private javax.swing.JMenuItem jMenuItemActivo;
+    private javax.swing.JMenuItem jMenuItemActivoM;
     private javax.swing.JMenuItem jMenuItemAdministrarUsuarios;
+    private javax.swing.JMenuItem jMenuItemAutor;
     private javax.swing.JMenuItem jMenuItemBalanceGeneral;
     private javax.swing.JMenuItem jMenuItemComprobantes;
     private javax.swing.JMenuItem jMenuItemCuentas;
+    private javax.swing.JMenuItem jMenuItemDepreciaciones;
     private javax.swing.JMenuItem jMenuItemEstadodeResultados;
+    private javax.swing.JMenuItem jMenuItemLibro;
+    private javax.swing.JMenuItem jMenuItemMantenimiento;
+    private javax.swing.JMenuItem jMenuItemPrestamo;
+    private javax.swing.JMenuItem jMenuItemReporte1A;
+    private javax.swing.JMenuItem jMenuItemReporte1B;
+    private javax.swing.JMenuItem jMenuItemReporte1M;
+    private javax.swing.JMenuItem jMenuItemReporte2B;
+    private javax.swing.JMenuItem jMenuItemReporte2M;
+    private javax.swing.JMenuItem jMenuItemTipodeActivo;
     private javax.swing.JMenuItem jMenuItemTipodeCuenta;
     private javax.swing.JMenu jMenuUsuarios;
     // End of variables declaration//GEN-END:variables

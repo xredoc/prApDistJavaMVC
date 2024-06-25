@@ -1,6 +1,6 @@
-C:\Apps\prApDistJavaMVC\BackEnd\src\main\java\com\mycompany\backend\BackEnd.java
-C:\Apps\prApDistJavaMVC\BackEnd\src\main\java\com\mycompany\backend\controlador\UsuarioControlador.java
-C:\Apps\prApDistJavaMVC\BackEnd\src\main\java\com\mycompany\backend\persistencia\HibernateUtil.java
-C:\Apps\prApDistJavaMVC\BackEnd\src\main\java\com\mycompany\backend\negocio\UsuarioNegocio.java
-C:\Apps\prApDistJavaMVC\BackEnd\src\main\java\com\mycompany\backend\modelo\Usuario.java
-C:\Apps\prApDistJavaMVC\BackEnd\src\main\java\com\mycompany\backend\persistencia\UsuarioDAO.java
+C:\Git\prApDistJavaMVC\BackEnd\src\main\java\com\mycompany\backend\persistencia\UsuarioDAO.java
+C:\Git\prApDistJavaMVC\BackEnd\src\main\java\com\mycompany\backend\negocio\UsuarioNegocio.java
+C:\Git\prApDistJavaMVC\BackEnd\src\main\java\com\mycompany\backend\persistencia\HibernateUtil.java
+C:\Git\prApDistJavaMVC\BackEnd\src\main\java\com\mycompany\backend\BackEnd.java
+C:\Git\prApDistJavaMVC\BackEnd\src\main\java\com\mycompany\backend\controlador\UsuarioControlador.java
+C:\Git\prApDistJavaMVC\BackEnd\src\main\java\com\mycompany\backend\modelo\Usuario.java
