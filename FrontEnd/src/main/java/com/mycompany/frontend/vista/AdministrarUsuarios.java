@@ -114,6 +114,11 @@ public class AdministrarUsuarios extends javax.swing.JFrame {
         jScrollPane2.setViewportView(jTableUsuarios);
 
         jButtonNuevo.setText("Nuevo");
+        jButtonNuevo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonNuevoActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -180,13 +185,15 @@ public class AdministrarUsuarios extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButtonCrearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCrearActionPerformed
-         String usuario = jTextFieldNombreUsuario.getText();
+        String usuario = jComboBoxUsuario.getSelectedItem().toString();
         String clave = jTextFieldClave.getText();
+        String nombreUsuario = jTextFieldNombreUsuario.getText();
         if (usuario.isEmpty()) {
             JOptionPane.showMessageDialog(this, "El campo de nombre de usuario no puede estar vacío.");
             return;
         }
-        Usuario user = new Usuario(usuario, clave, usuario);
+        
+        Usuario user = new Usuario(usuario, clave, nombreUsuario);
         if (controlador.crearUsuario(user)) {
             cargarUsuarios();
         } else {
@@ -230,6 +237,16 @@ public class AdministrarUsuarios extends javax.swing.JFrame {
             }
         }
     }//GEN-LAST:event_jComboBoxUsuarioActionPerformed
+
+    private void jButtonNuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonNuevoActionPerformed
+        jComboBoxUsuario.setSelectedItem(null);
+        jComboBoxUsuario.setEditable(true);
+        jTextFieldNombreUsuario.setText("");
+        jTextFieldClave.setText("");
+        jComboBoxUsuario.setEnabled(true);
+        jTextFieldNombreUsuario.setEnabled(true);
+        jTextFieldClave.setEnabled(true);
+    }//GEN-LAST:event_jButtonNuevoActionPerformed
     
     private void cargarUsuarios() {
         List<Usuario> usuarios = controlador.leerTodosUsuarios();
