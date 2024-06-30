@@ -111,6 +111,7 @@ public class AdministrarUsuarios extends javax.swing.JFrame {
                 return types [columnIndex];
             }
         });
+        jTableUsuarios.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         jScrollPane2.setViewportView(jTableUsuarios);
 
         jButtonNuevo.setText("Nuevo");
