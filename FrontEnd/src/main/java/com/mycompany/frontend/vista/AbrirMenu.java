@@ -165,9 +165,19 @@ public class AbrirMenu extends javax.swing.JFrame {
         jMenuContabilidad.add(jMenuItemComprobantes);
 
         jMenuItemBalanceGeneral.setText("Balance general");
+        jMenuItemBalanceGeneral.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                jMenuItemBalanceGeneralMousePressed(evt);
+            }
+        });
         jMenuContabilidad.add(jMenuItemBalanceGeneral);
 
         jMenuItemEstadodeResultados.setText("Estado de resultados");
+        jMenuItemEstadodeResultados.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                jMenuItemEstadodeResultadosMousePressed(evt);
+            }
+        });
         jMenuContabilidad.add(jMenuItemEstadodeResultados);
 
         jMenuBar1.add(jMenuContabilidad);
@@ -205,12 +215,22 @@ public class AbrirMenu extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItemTipodeCuentaMousePressed
 
     private void jMenuItemCuentasMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenuItemCuentasMousePressed
-        new Cuenta().setVisible(true);
+        new Cuentas2().setVisible(true);
     }//GEN-LAST:event_jMenuItemCuentasMousePressed
 
     private void jMenuItemComprobantesMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenuItemComprobantesMousePressed
         new ComprobanteContable().setVisible(true);
     }//GEN-LAST:event_jMenuItemComprobantesMousePressed
+
+    private void jMenuItemBalanceGeneralMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenuItemBalanceGeneralMousePressed
+        // TODO add your handling code here:
+        new BalanceGeneral().setVisible(true);
+    }//GEN-LAST:event_jMenuItemBalanceGeneralMousePressed
+
+    private void jMenuItemEstadodeResultadosMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenuItemEstadodeResultadosMousePressed
+        // TODO add your handling code here:
+        new EstadoResultados().setVisible(true);
+    }//GEN-LAST:event_jMenuItemEstadodeResultadosMousePressed
 
     /**
      * @param args the command line arguments

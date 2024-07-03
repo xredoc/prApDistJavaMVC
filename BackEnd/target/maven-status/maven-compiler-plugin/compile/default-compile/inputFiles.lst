@@ -1,6 +1,14 @@
-C:\Git\prApDistJavaMVC\BackEnd\src\main\java\com\mycompany\backend\persistencia\UsuarioDAO.java
+C:\Git\prApDistJavaMVC\BackEnd\src\main\java\com\mycompany\backend\negocio\CuentaNegocio.java
+C:\Git\prApDistJavaMVC\BackEnd\src\main\java\com\mycompany\backend\modelo\TipoCuenta.java
 C:\Git\prApDistJavaMVC\BackEnd\src\main\java\com\mycompany\backend\negocio\UsuarioNegocio.java
-C:\Git\prApDistJavaMVC\BackEnd\src\main\java\com\mycompany\backend\persistencia\HibernateUtil.java
-C:\Git\prApDistJavaMVC\BackEnd\src\main\java\com\mycompany\backend\BackEnd.java
+C:\Git\prApDistJavaMVC\BackEnd\src\main\java\com\mycompany\backend\controlador\CuentaControlador.java
+C:\Git\prApDistJavaMVC\BackEnd\src\main\java\com\mycompany\backend\persistencia\TipoCuentaDAO.java
+C:\Git\prApDistJavaMVC\BackEnd\src\main\java\com\mycompany\backend\controlador\TipoCuentaControlador.java
 C:\Git\prApDistJavaMVC\BackEnd\src\main\java\com\mycompany\backend\controlador\UsuarioControlador.java
 C:\Git\prApDistJavaMVC\BackEnd\src\main\java\com\mycompany\backend\modelo\Usuario.java
+C:\Git\prApDistJavaMVC\BackEnd\src\main\java\com\mycompany\backend\persistencia\UsuarioDAO.java
+C:\Git\prApDistJavaMVC\BackEnd\src\main\java\com\mycompany\backend\modelo\Cuenta.java
+C:\Git\prApDistJavaMVC\BackEnd\src\main\java\com\mycompany\backend\negocio\TipoCuentaNegocio.java
+C:\Git\prApDistJavaMVC\BackEnd\src\main\java\com\mycompany\backend\persistencia\CuentaDAO.java
+C:\Git\prApDistJavaMVC\BackEnd\src\main\java\com\mycompany\backend\persistencia\HibernateUtil.java
+C:\Git\prApDistJavaMVC\BackEnd\src\main\java\com\mycompany\backend\BackEnd.java

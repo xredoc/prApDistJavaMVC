@@ -159,11 +159,17 @@
               <Properties>
                 <Property name="text" type="java.lang.String" value="Balance general"/>
               </Properties>
+              <Events>
+                <EventHandler event="mousePressed" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="jMenuItemBalanceGeneralMousePressed"/>
+              </Events>
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="jMenuItemEstadodeResultados">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Estado de resultados"/>
               </Properties>
+              <Events>
+                <EventHandler event="mousePressed" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="jMenuItemEstadodeResultadosMousePressed"/>
+              </Events>
             </MenuItem>
           </SubComponents>
         </Menu>

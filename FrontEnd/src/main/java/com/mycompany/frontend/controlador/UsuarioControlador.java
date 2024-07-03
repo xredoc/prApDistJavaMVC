@@ -29,6 +29,7 @@ public class UsuarioControlador {
 
     public Usuario leerUsuario(String usuario) {
         String respuesta = enviarComando("LEER:" + usuario);
+        
         if (respuesta.equals("FAILURE")) {
             return null;
         } else {
@@ -39,14 +40,23 @@ public class UsuarioControlador {
 
     public List<Usuario> leerTodosUsuarios() {
         List<Usuario> usuarios = new ArrayList<>();
-        String respuesta = enviarComando("LEER_TODOS");
-        if (respuesta != null && !respuesta.isEmpty()) {
-            String[] registros = respuesta.split("\n");
-            for (String registro : registros) {
-                if (!registro.equals("END")) {
-                    String[] datos = registro.split(":");
-                    usuarios.add(new Usuario(datos[0], datos[1], datos[2]));
-                }
+       // String respuesta = enviarComando("LEER_TODOS");
+        //List<Usuario> respuesta =enviarComandoLista("LEER_TODOS");
+        
+//        if (respuesta != null && !respuesta.isEmpty()) {
+//            String[] registros = respuesta.split("\n");
+//            for (String registro : registros) {
+//                if (!registro.equals("END")) {
+//                    String[] datos = registro.split(":");
+//                    usuarios.add(new Usuario(datos[0], datos[1], datos[2]));
+//                }
+//            }
+//        }
+        List<String> respuestas = enviarComandoLista("LEER_TODOS");
+        for (String respuesta : respuestas) {
+            if (respuesta != null && !respuesta.isEmpty() && !respuesta.equals("END")) {
+                String[] datos = respuesta.split(":");
+                usuarios.add(new Usuario(datos[0], datos[1], datos[2]));
             }
         }
         return usuarios;
@@ -72,5 +82,24 @@ public class UsuarioControlador {
             e.printStackTrace();
             return null;
         }
+    }
+    private List<String> enviarComandoLista(String comando) {
+        List<String> respuesta = new ArrayList<>();
+        try (Socket socket = new Socket(SERVER_IP, SERVER_PORT);
+             PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
+             BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()))) {
+
+            out.println(comando);
+            String line;
+            while ((line = in.readLine()) != null) {
+                respuesta.add(line);
+                if (line.equals("END")) {
+                    break;
+                }
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return respuesta;
     }
 }

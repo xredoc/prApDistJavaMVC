@@ -1,6 +1,14 @@
+com\mycompany\backend\negocio\TipoCuentaNegocio.class
+com\mycompany\backend\BackEnd.class
+com\mycompany\backend\persistencia\CuentaDAO.class
+com\mycompany\backend\controlador\TipoCuentaControlador.class
+com\mycompany\backend\modelo\TipoCuenta.class
 com\mycompany\backend\modelo\Usuario.class
 com\mycompany\backend\persistencia\HibernateUtil.class
+com\mycompany\backend\negocio\CuentaNegocio.class
+com\mycompany\backend\persistencia\TipoCuentaDAO.class
 com\mycompany\backend\negocio\UsuarioNegocio.class
-com\mycompany\backend\BackEnd.class
+com\mycompany\backend\modelo\Cuenta.class
+com\mycompany\backend\controlador\CuentaControlador.class
 com\mycompany\backend\persistencia\UsuarioDAO.class
 com\mycompany\backend\controlador\UsuarioControlador.class

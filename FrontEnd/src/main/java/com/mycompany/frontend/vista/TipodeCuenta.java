@@ -4,17 +4,32 @@
  */
 package com.mycompany.frontend.vista;
 
+import com.mycompany.frontend.controlador.TipoCuentaControlador;
+import com.mycompany.frontend.modelo.TipoCuenta;
+import com.mycompany.frontend.modelo.GrupoGPNP;
+
+import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.List;
+
 /**
  *
  * @author German
  */
 public class TipodeCuenta extends javax.swing.JFrame {
+    
+    private TipoCuentaControlador controlador;
+    private List<GrupoGPNP> gruposGPNP;
 
     /**
      * Creates new form TipodeCuenta
      */
     public TipodeCuenta() {
         initComponents();
+        controlador = new TipoCuentaControlador();
+        cargarTipoCuenta();
     }
 
     /**
@@ -28,25 +43,55 @@ public class TipodeCuenta extends javax.swing.JFrame {
 
         jLabel1 = new javax.swing.JLabel();
         jComboBoxNombreTipoCuenta = new javax.swing.JComboBox<>();
-        jButtonCrear = new javax.swing.JButton();
+        jButtonNuevo = new javax.swing.JButton();
         jButtonLeer = new javax.swing.JButton();
-        jButtonActualizar = new javax.swing.JButton();
+        jButtonGuardar = new javax.swing.JButton();
         jButtonEliminar = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTableTipodeCuenta = new javax.swing.JTable();
+        jComboBoxNombreGrupoGPNP = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Tipo de cuenta");
 
         jLabel1.setText("Tipo de cuenta:");
 
-        jButtonCrear.setText("Crear");
+        jComboBoxNombreTipoCuenta.setEditable(true);
+        jComboBoxNombreTipoCuenta.setToolTipText("");
+        jComboBoxNombreTipoCuenta.setName(""); // NOI18N
+        jComboBoxNombreTipoCuenta.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jComboBoxNombreTipoCuentaActionPerformed(evt);
+            }
+        });
+
+        jButtonNuevo.setText("Nuevo");
+        jButtonNuevo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonNuevoActionPerformed(evt);
+            }
+        });
 
         jButtonLeer.setText("Leer");
+        jButtonLeer.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonLeerActionPerformed(evt);
+            }
+        });
 
-        jButtonActualizar.setText("Actualizar");
+        jButtonGuardar.setText("Guardar");
+        jButtonGuardar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonGuardarActionPerformed(evt);
+            }
+        });
 
         jButtonEliminar.setText("Eliminar");
+        jButtonEliminar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonEliminarActionPerformed(evt);
+            }
+        });
 
         jTableTipodeCuenta.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -66,30 +111,42 @@ public class TipodeCuenta extends javax.swing.JFrame {
         });
         jScrollPane1.setViewportView(jTableTipodeCuenta);
 
+        jComboBoxNombreGrupoGPNP.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "DeBalance", "DeResultados" }));
+        jComboBoxNombreGrupoGPNP.setEnabled(false);
+        jComboBoxNombreGrupoGPNP.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jComboBoxNombreGrupoGPNPActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
+                .addGap(63, 63, 63)
+                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(46, 46, 46)
+                .addComponent(jComboBoxNombreTipoCuenta, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(19, 19, 19)
+                .addComponent(jButtonNuevo)
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jButtonLeer)
+                        .addGap(18, 18, 18)
+                        .addComponent(jButtonGuardar))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(63, 63, 63)
-                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(46, 46, 46)
-                        .addComponent(jComboBoxNombreTipoCuenta, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(19, 19, 19)
-                        .addComponent(jButtonCrear)
                         .addGap(18, 18, 18)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jButtonLeer)
-                                .addGap(18, 18, 18)
-                                .addComponent(jButtonActualizar))
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
-                        .addGap(18, 18, 18)
-                        .addComponent(jButtonEliminar)))
-                .addContainerGap(27, Short.MAX_VALUE))
+                        .addComponent(jButtonEliminar))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jComboBoxNombreGrupoGPNP, javax.swing.GroupLayout.PREFERRED_SIZE, 157, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(20, 20, 20))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -100,21 +157,96 @@ public class TipodeCuenta extends javax.swing.JFrame {
                     .addComponent(jComboBoxNombreTipoCuenta, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButtonCrear)
+                    .addComponent(jButtonNuevo)
                     .addComponent(jButtonLeer)
-                    .addComponent(jButtonActualizar)
+                    .addComponent(jButtonGuardar)
                     .addComponent(jButtonEliminar))
                 .addGap(18, 18, 18)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(17, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(jComboBoxNombreGrupoGPNP, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(105, 105, 105)))
+                .addContainerGap(18, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void jComboBoxNombreTipoCuentaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBoxNombreTipoCuentaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jComboBoxNombreTipoCuentaActionPerformed
+
+    private void jButtonNuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonNuevoActionPerformed
+        // TODO add your handling code here:
+        jComboBoxNombreTipoCuenta.setSelectedItem("");
+        jComboBoxNombreTipoCuenta.setEnabled(true);
+    }//GEN-LAST:event_jButtonNuevoActionPerformed
+
+    private void jButtonLeerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonLeerActionPerformed
+        // TODO add your handling code here:
+        cargarTipoCuenta();
+    }//GEN-LAST:event_jButtonLeerActionPerformed
+
+    private void jButtonGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonGuardarActionPerformed
+        // TODO add your handling code here:
+        String nombreTipoCuenta = (String) jComboBoxNombreTipoCuenta.getSelectedItem();
+        if (nombreTipoCuenta == null || nombreTipoCuenta.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "El campo Tipo de Cuenta no puede estar vacío.");
+            return;
+        }
+
+        List<TipoCuenta> tipoCuentas = controlador.leerTodosTipoCuenta();
+        for (TipoCuenta tipoCuenta : tipoCuentas) {
+            if (tipoCuenta.getNombreTipoCuenta().equals(nombreTipoCuenta)) {
+                JOptionPane.showMessageDialog(this, "Tipo de cuenta ya existe.");
+                return;
+            }
+        }
+
+        TipoCuenta nuevaTipoCuenta = new TipoCuenta(nombreTipoCuenta);
+        if (controlador.crearTipoCuenta(nuevaTipoCuenta)) {
+            cargarTipoCuenta();
+        } else {
+            JOptionPane.showMessageDialog(this, "Error al crear el Tipo de Cuenta.");
+        }
+    }//GEN-LAST:event_jButtonGuardarActionPerformed
+
+    private void jButtonEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEliminarActionPerformed
+        // TODO add your handling code here:
+        String nombreTipoCuenta = (String) jComboBoxNombreTipoCuenta.getSelectedItem();
+        if (controlador.eliminarTipoCuenta(nombreTipoCuenta)) {
+            cargarTipoCuenta();
+        } else {
+            JOptionPane.showMessageDialog(this, "Error al eliminar el Tipo de Cuenta.");
+        }
+    }//GEN-LAST:event_jButtonEliminarActionPerformed
+
+    private void jComboBoxNombreGrupoGPNPActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBoxNombreGrupoGPNPActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jComboBoxNombreGrupoGPNPActionPerformed
+
     /**
      * @param args the command line arguments
      */
+private void cargarTipoCuenta() {
+    List<TipoCuenta> tipoCuentas = controlador.leerTodosTipoCuenta();
+    tipoCuentas.forEach(System.out::println);
+    System.out.println("El tamaño de la lista es: " + tipoCuentas.size());
+    jComboBoxNombreTipoCuenta.removeAllItems();
+    DefaultTableModel model = (DefaultTableModel) jTableTipodeCuenta.getModel();
+    model.setRowCount(0);
+    for (TipoCuenta tipoCuenta : tipoCuentas) {
+            jComboBoxNombreTipoCuenta.addItem(tipoCuenta.getNombreTipoCuenta());
+            model.addRow(new Object[]{tipoCuenta.getNombreTipoCuenta()});
+    }
+    gruposGPNP= controlador.leerTodosGruposGPNP();
+    jComboBoxNombreGrupoGPNP.removeAllItems();
+    for (GrupoGPNP grupoGPNP: gruposGPNP){
+    //jComboBoxNombreGrupoGPNP.addItem(grupoGPNP.getNombreGrupoGPNP());
+    }
+}
+    
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
@@ -148,10 +280,11 @@ public class TipodeCuenta extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButtonActualizar;
-    private javax.swing.JButton jButtonCrear;
     private javax.swing.JButton jButtonEliminar;
+    private javax.swing.JButton jButtonGuardar;
     private javax.swing.JButton jButtonLeer;
+    private javax.swing.JButton jButtonNuevo;
+    private javax.swing.JComboBox<String> jComboBoxNombreGrupoGPNP;
     private javax.swing.JComboBox<String> jComboBoxNombreTipoCuenta;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;

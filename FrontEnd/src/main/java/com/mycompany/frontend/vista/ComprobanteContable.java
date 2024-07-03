@@ -4,17 +4,42 @@
  */
 package com.mycompany.frontend.vista;
 
+import com.mycompany.backend.dao.ComprobanteCabeceraDAO;
+import com.mycompany.backend.dao.ComprobanteDetalleDAO;
+import com.mycompany.backend.models.ComprobanteCabecera;
+import com.mycompany.backend.models.ComprobanteDetalle;
+
+import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
+import java.sql.SQLException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.List;
+
 /**
  *
  * @author German
  */
 public class ComprobanteContable extends javax.swing.JFrame {
+    
+    private ComprobanteCabeceraDAO comprobanteCabeceraDAO;
+    private ComprobanteDetalleDAO comprobanteDetalleDAO;
+    private SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
 
     /**
      * Creates new form ComprobanteContable
      */
     public ComprobanteContable() {
         initComponents();
+        try {
+            comprobanteCabeceraDAO = new ComprobanteCabeceraDAO();
+            comprobanteDetalleDAO = new ComprobanteDetalleDAO();
+            cargarNumeroComprobantes();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(this, "Error al conectar a la base de datos: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        }
     }
 
     /**
@@ -32,31 +57,31 @@ public class ComprobanteContable extends javax.swing.JFrame {
         jTextFieldFechaComprobante = new javax.swing.JTextField();
         jTextFieldObservacionesComprobante = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
-        jLabel4 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTableComprobanteDetalle = new javax.swing.JTable();
-        jButtonCrearComprobante = new javax.swing.JButton();
+        jButtonNuevoComprobante = new javax.swing.JButton();
         jButtonLeerComprobante = new javax.swing.JButton();
-        jButtonActualizarComprobante = new javax.swing.JButton();
+        jButtonGuardarComprobante = new javax.swing.JButton();
         jButtonAnularComprobaznte = new javax.swing.JButton();
-        jButtonCrearDetalle = new javax.swing.JButton();
+        jButtonNuevoDetalle = new javax.swing.JButton();
         jLabel5 = new javax.swing.JLabel();
         jButtonLeerDetalle = new javax.swing.JButton();
-        jButtonActualizarDetalle = new javax.swing.JButton();
+        jButtonGuardarDetalle = new javax.swing.JButton();
         jButtonEliminarDetalle = new javax.swing.JButton();
+        jCheckBoxAnulado = new javax.swing.JCheckBox();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Comprobante contable");
 
         jLabel1.setText("Numero:");
 
+        jComboBoxNumeroComprobante.setEditable(true);
+
         jLabel2.setText("Fecha:");
 
         jTextFieldFechaComprobante.setText("aaaa/mm/dd");
 
         jLabel3.setText("Nota:");
-
-        jLabel4.setText("Detalle:");
 
         jTableComprobanteDetalle.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -76,23 +101,65 @@ public class ComprobanteContable extends javax.swing.JFrame {
         });
         jScrollPane1.setViewportView(jTableComprobanteDetalle);
 
-        jButtonCrearComprobante.setText("Crear");
+        jButtonNuevoComprobante.setText("Nuevo");
+        jButtonNuevoComprobante.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonNuevoComprobanteActionPerformed(evt);
+            }
+        });
 
         jButtonLeerComprobante.setText("Leer");
+        jButtonLeerComprobante.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonLeerComprobanteActionPerformed(evt);
+            }
+        });
 
-        jButtonActualizarComprobante.setText("Actualizar");
+        jButtonGuardarComprobante.setText("Guardar");
+        jButtonGuardarComprobante.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonGuardarComprobanteActionPerformed(evt);
+            }
+        });
 
         jButtonAnularComprobaznte.setText("Anular");
+        jButtonAnularComprobaznte.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonAnularComprobaznteActionPerformed(evt);
+            }
+        });
 
-        jButtonCrearDetalle.setText("Crear");
+        jButtonNuevoDetalle.setText("Nuevo");
+        jButtonNuevoDetalle.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonNuevoDetalleActionPerformed(evt);
+            }
+        });
 
         jLabel5.setText("Movimiento:");
 
         jButtonLeerDetalle.setText("Leer");
+        jButtonLeerDetalle.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonLeerDetalleActionPerformed(evt);
+            }
+        });
 
-        jButtonActualizarDetalle.setText("Actualizar");
+        jButtonGuardarDetalle.setText("Guardar");
+        jButtonGuardarDetalle.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonGuardarDetalleActionPerformed(evt);
+            }
+        });
 
         jButtonEliminarDetalle.setText("Eliminar");
+        jButtonEliminarDetalle.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonEliminarDetalleActionPerformed(evt);
+            }
+        });
+
+        jCheckBoxAnulado.setText("Anulado");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -104,51 +171,64 @@ public class ComprobanteContable extends javax.swing.JFrame {
                         .addContainerGap()
                         .addComponent(jScrollPane1))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(26, 26, 26)
+                        .addGap(29, 29, 29)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                    .addComponent(jLabel4, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 84, Short.MAX_VALUE)
                                     .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                    .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addGap(18, 18, 18)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jTextFieldFechaComprobante, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jTextFieldObservacionesComprobante, javax.swing.GroupLayout.PREFERRED_SIZE, 293, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                    .addComponent(jTextFieldObservacionesComprobante, javax.swing.GroupLayout.PREFERRED_SIZE, 293, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(41, 41, 41)
-                                .addComponent(jComboBoxNumeroComprobante, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 60, Short.MAX_VALUE)
+                                .addComponent(jComboBoxNumeroComprobante, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jCheckBoxAnulado, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(48, 48, 48)))
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jButtonActualizarComprobante)
+                            .addComponent(jButtonGuardarComprobante)
                             .addComponent(jButtonLeerComprobante)
                             .addComponent(jButtonAnularComprobaznte)
-                            .addComponent(jButtonCrearComprobante))
+                            .addComponent(jButtonNuevoComprobante))
                         .addGap(45, 45, 45)))
                 .addContainerGap())
             .addGroup(layout.createSequentialGroup()
                 .addGap(27, 27, 27)
                 .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(jButtonCrearDetalle)
+                .addComponent(jButtonNuevoDetalle)
                 .addGap(18, 18, 18)
                 .addComponent(jButtonLeerDetalle)
                 .addGap(18, 18, 18)
-                .addComponent(jButtonActualizarDetalle)
+                .addComponent(jButtonGuardarDetalle)
                 .addGap(18, 18, 18)
                 .addComponent(jButtonEliminarDetalle)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(145, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(14, 14, 14)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
+                        .addGap(14, 14, 14)
+                        .addComponent(jButtonNuevoComprobante)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jButtonLeerComprobante)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jButtonGuardarComprobante)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jButtonAnularComprobaznte)
+                        .addGap(13, 13, 13))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addContainerGap()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel1)
-                            .addComponent(jComboBoxNumeroComprobante, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jComboBoxNumeroComprobante, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jCheckBoxAnulado))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel2)
@@ -157,30 +237,67 @@ public class ComprobanteContable extends javax.swing.JFrame {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel3)
                             .addComponent(jTextFieldObservacionesComprobante, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jLabel4))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jButtonCrearComprobante)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jButtonLeerComprobante)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jButtonActualizarComprobante)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jButtonAnularComprobaznte)))
-                .addGap(13, 13, 13)
+                        .addGap(32, 32, 32)))
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButtonCrearDetalle)
+                    .addComponent(jButtonNuevoDetalle)
                     .addComponent(jLabel5)
                     .addComponent(jButtonLeerDetalle)
-                    .addComponent(jButtonActualizarDetalle)
+                    .addComponent(jButtonGuardarDetalle)
                     .addComponent(jButtonEliminarDetalle))
                 .addContainerGap(16, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jButtonNuevoComprobanteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonNuevoComprobanteActionPerformed
+        // TODO add your handling code here:
+        jTextFieldFechaComprobante.setText("");
+        jTextFieldObservacionesComprobante.setText("");
+        jCheckBoxAnulado.setSelected(false);
+        DefaultTableModel model = (DefaultTableModel) jTableComprobanteDetalle.getModel();
+        model.setRowCount(0);
+//        jComboBoxNumeroComprobante.setSelectedItem(String.valueOf(comprobanteCabeceraDAO.getMaxNumeroComprobante() + 1));
+   
+    }//GEN-LAST:event_jButtonNuevoComprobanteActionPerformed
+
+    private void jButtonLeerComprobanteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonLeerComprobanteActionPerformed
+        // TODO add your handling code here:
+        int numeroComprobante = Integer.parseInt((String) jComboBoxNumeroComprobante.getSelectedItem());
+        cargarComprobante(numeroComprobante);
+    }//GEN-LAST:event_jButtonLeerComprobanteActionPerformed
+
+    private void jButtonGuardarComprobanteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonGuardarComprobanteActionPerformed
+        // TODO add your handling code here:
+        guardarComprobante();
+    }//GEN-LAST:event_jButtonGuardarComprobanteActionPerformed
+
+    private void jButtonAnularComprobaznteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAnularComprobaznteActionPerformed
+        // TODO add your handling code here:
+        anularComprobante();
+    }//GEN-LAST:event_jButtonAnularComprobaznteActionPerformed
+
+    private void jButtonNuevoDetalleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonNuevoDetalleActionPerformed
+        // TODO add your handling code here:
+         DefaultTableModel model = (DefaultTableModel) jTableComprobanteDetalle.getModel();
+        model.addRow(new Object[]{"", "", 0.0f, 0.0f});
+    }//GEN-LAST:event_jButtonNuevoDetalleActionPerformed
+
+    private void jButtonLeerDetalleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonLeerDetalleActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButtonLeerDetalleActionPerformed
+
+    private void jButtonGuardarDetalleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonGuardarDetalleActionPerformed
+        // TODO add your handling code here:
+        guardarComprobante();
+    }//GEN-LAST:event_jButtonGuardarDetalleActionPerformed
+
+    private void jButtonEliminarDetalleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEliminarDetalleActionPerformed
+        // TODO add your handling code here:
+        eliminarDetalle();
+    }//GEN-LAST:event_jButtonEliminarDetalleActionPerformed
 
     /**
      * @param args the command line arguments
@@ -216,21 +333,106 @@ public class ComprobanteContable extends javax.swing.JFrame {
             }
         });
     }
+    
+    private void cargarNumeroComprobantes() {
+        try {
+            List<Integer> numerosComprobantes = comprobanteCabeceraDAO.getAllNumeroComprobantes();
+            jComboBoxNumeroComprobante.removeAllItems();
+            for (Integer numero : numerosComprobantes) {
+                jComboBoxNumeroComprobante.addItem(String.valueOf(numero));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+     private void cargarComprobante(int numeroComprobante) {
+        try {
+            ComprobanteCabecera cabecera = comprobanteCabeceraDAO.getComprobanteCabecera(numeroComprobante);
+            if (cabecera != null) {
+                jTextFieldFechaComprobante.setText(dateFormat.format(cabecera.getFechaComprobante()));
+                jTextFieldObservacionesComprobante.setText(cabecera.getObservacionesComprobante());
+                jCheckBoxAnulado.setSelected(cabecera.isAnulado());
+
+                List<ComprobanteDetalle> detalles = comprobanteDetalleDAO.getDetallesByNumeroComprobante(numeroComprobante);
+                DefaultTableModel model = (DefaultTableModel) jTableComprobanteDetalle.getModel();
+                model.setRowCount(0);
+                for (ComprobanteDetalle detalle : detalles) {
+                    model.addRow(new Object[]{detalle.getCodCuenta(), detalle.getDetalleTransaccion(), detalle.getDebe(), detalle.getHaber()});
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void guardarComprobante() {
+        try {
+            int numeroComprobante = Integer.parseInt((String) jComboBoxNumeroComprobante.getSelectedItem());
+            Date fecha = dateFormat.parse(jTextFieldFechaComprobante.getText());
+            String observaciones = jTextFieldObservacionesComprobante.getText();
+            boolean anulado = jCheckBoxAnulado.isSelected();
+
+            ComprobanteCabecera cabecera = new ComprobanteCabecera(numeroComprobante, fecha, observaciones, anulado);
+            comprobanteCabeceraDAO.updateComprobanteCabecera(cabecera);
+
+            DefaultTableModel model = (DefaultTableModel) jTableComprobanteDetalle.getModel();
+            for (int i = 0; i < model.getRowCount(); i++) {
+                ComprobanteDetalle detalle = new ComprobanteDetalle(
+                    0,
+                    numeroComprobante,
+                    (String) model.getValueAt(i, 0),
+                    (String) model.getValueAt(i, 1),
+                    (Float) model.getValueAt(i, 2),
+                    (Float) model.getValueAt(i, 3)
+                );
+                comprobanteDetalleDAO.createComprobanteDetalle(detalle);
+            }
+        } catch (SQLException | ParseException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void anularComprobante() {
+        try {
+            int numeroComprobante = Integer.parseInt((String) jComboBoxNumeroComprobante.getSelectedItem());
+            comprobanteCabeceraDAO.anularComprobante(numeroComprobante);
+            comprobanteDetalleDAO.anularDetalles(numeroComprobante);
+            cargarComprobante(numeroComprobante);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void eliminarDetalle() {
+        try {
+            int selectedRow = jTableComprobanteDetalle.getSelectedRow();
+            if (selectedRow >= 0) {
+                DefaultTableModel model = (DefaultTableModel) jTableComprobanteDetalle.getModel();
+                int numeroComprobanteDetalle = (Integer) model.getValueAt(selectedRow, 0);
+                comprobanteDetalleDAO.deleteComprobanteDetalle(numeroComprobanteDetalle);
+                model.removeRow(selectedRow);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButtonActualizarComprobante;
-    private javax.swing.JButton jButtonActualizarDetalle;
     private javax.swing.JButton jButtonAnularComprobaznte;
-    private javax.swing.JButton jButtonCrearComprobante;
-    private javax.swing.JButton jButtonCrearDetalle;
     private javax.swing.JButton jButtonEliminarDetalle;
+    private javax.swing.JButton jButtonGuardarComprobante;
+    private javax.swing.JButton jButtonGuardarDetalle;
     private javax.swing.JButton jButtonLeerComprobante;
     private javax.swing.JButton jButtonLeerDetalle;
+    private javax.swing.JButton jButtonNuevoComprobante;
+    private javax.swing.JButton jButtonNuevoDetalle;
+    private javax.swing.JCheckBox jCheckBoxAnulado;
     private javax.swing.JComboBox<String> jComboBoxNumeroComprobante;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTableComprobanteDetalle;
